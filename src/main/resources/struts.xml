@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <package name="main" extends="struts-default">
+
+        <action name="index" class="eu.belugin.actions.MainAction" method="showPosts">
+            <result name="success">/main.jsp</result>
+        </action>
+
+        <action name="editPost" class="eu.belugin.actions.MainAction">
+            <result name="success">/post-editing.jsp</result>
+        </action>
+
+        <action name="hidePost" class="eu.belugin.actions.MainAction" method="hidePost">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+
+        <action name="deletePost" class="eu.belugin.actions.MainAction" method="deletePost">
+            <result name="success" type="redirectAction">hiddenPosts</result>
+        </action>
+
+        <action name="hiddenPosts" class="eu.belugin.actions.MainAction" method="showDeletedPosts">
+            <result name="success">/hidden-posts.jsp</result>
+        </action>
+
+        <action name="save" class="eu.belugin.actions.MainAction" method="addPost">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+
+        <action name="restorePost" class="eu.belugin.actions.MainAction" method="restoreDeletedPost">
+            <result name="success" type="redirectAction">hiddenPosts</result>
+        </action>
+    </package>
+</struts>

@@ -10,11 +10,11 @@ import java.util.List;
 public class MainAction extends ActionSupport /*implements Preparable*/ {
 
     private Post post;
-    private List posts;
+    private List<Post> posts;
 
     @Override
     public String execute() throws Exception {
-        if (post != null && post.getId() != 0) {
+        if (post != null && post.getId() != null) {
             post = Dao.getPost(post.getId());
         }
 
@@ -27,9 +27,9 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
 
     public String showPosts() {
         List<Post> postList = Dao.getAllPosts();
-        List<Post> notDeleted = new ArrayList<Post>();
+        List<Post> notDeleted = new ArrayList<>();
         for (Post p :postList) {
-            if (!p.isDeleted()) {
+            if (!p.isHidden()) {
                 notDeleted.add(p);
             }
         }
@@ -52,9 +52,9 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
 
     public String showDeletedPosts() throws Exception {
         List<Post> postList = Dao.getAllPosts();
-        List<Post> notDeleted = new ArrayList<Post>();
+        List<Post> notDeleted = new ArrayList<>();
         for (Post p :postList) {
-            if (p.isDeleted()) {
+            if (p.isHidden()) {
                 notDeleted.add(p);
             }
         }
@@ -75,6 +75,18 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return SUCCESS;
     }
 
+    public String addReplay() throws Exception {
+        Dao.addReply(post);
+
+        return SUCCESS;
+    }
+
+    public String deleteReply() throws Exception {
+        Dao.deleteReply(post);
+
+        return SUCCESS;
+    }
+
     public Post getPost() {
         return post;
     }
@@ -87,7 +99,7 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return posts;
     }
 
-    private void setPosts(List posts) {
+    private void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 }

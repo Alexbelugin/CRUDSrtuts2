@@ -9,11 +9,11 @@
     <package name="main" extends="struts-default">
 
         <action name="index" class="eu.belugin.actions.MainAction" method="showPosts">
-            <result name="success">/main.jsp</result>
+            <result name="success">/pages/main.jsp</result>
         </action>
 
         <action name="editPost" class="eu.belugin.actions.MainAction">
-            <result name="success">/post-editing.jsp</result>
+            <result name="success">/pages/post-editing.jsp</result>
         </action>
 
         <action name="hidePost" class="eu.belugin.actions.MainAction" method="hidePost">
@@ -25,7 +25,7 @@
         </action>
 
         <action name="hiddenPosts" class="eu.belugin.actions.MainAction" method="showDeletedPosts">
-            <result name="success">/hidden-posts.jsp</result>
+            <result name="success">/pages/hidden-posts.jsp</result>
         </action>
 
         <action name="save" class="eu.belugin.actions.MainAction" method="addPost">
@@ -34,6 +34,18 @@
 
         <action name="restorePost" class="eu.belugin.actions.MainAction" method="restoreDeletedPost">
             <result name="success" type="redirectAction">hiddenPosts</result>
+        </action>
+
+        <action name="addReply" class="eu.belugin.actions.MainAction">
+            <result name="success">/pages/reply-editing.jsp</result>
+        </action>
+
+        <action name="saveReply" class="eu.belugin.actions.MainAction" method="addReplay">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+
+        <action name="deleteReply" class="eu.belugin.actions.MainAction" method="deleteReply">
+            <result name="success" type="redirectAction">index</result>
         </action>
     </package>
 </struts>

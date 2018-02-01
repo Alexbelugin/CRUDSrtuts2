@@ -2,21 +2,30 @@ package eu.belugin.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
 import eu.belugin.DAO.Dao;
-import eu.belugin.model.Post;
+import eu.belugin.model.Reply;
+import eu.belugin.model.SuperPost;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainAction extends ActionSupport /*implements Preparable*/ {
 
-    private Post post;
-    private List<Post> posts;
+    private SuperPost post;
+    private Reply reply;
+    private List<SuperPost> posts;
+//    private List<Reply> replies;
 
     @Override
     public String execute() throws Exception {
         if (post != null && post.getId() != null) {
             post = Dao.getPost(post.getId());
         }
+//        else if (post == null) {
+//            post = new SuperPost();
+//            post.setId(String.valueOf(Dao.getAllPosts().size()));
+//        } else {
+//            post.setId(String.valueOf(Dao.getAllPosts().size()));
+//        }
 
         return SUCCESS;
     }
@@ -26,15 +35,15 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
 //    }
 
     public String showPosts() {
-        List<Post> postList = Dao.getAllPosts();
-        List<Post> notDeleted = new ArrayList<>();
-        for (Post p :postList) {
+        List<SuperPost> postList = Dao.getAllPosts();
+        List<SuperPost> notDeleted = new ArrayList<>();
+        for (SuperPost p :postList) {
             if (!p.isHidden()) {
                 notDeleted.add(p);
             }
         }
-
         setPosts(notDeleted);
+//        setReplies(Dao.getReplies());
 
         return SUCCESS;
     }
@@ -51,9 +60,9 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     }
 
     public String showDeletedPosts() throws Exception {
-        List<Post> postList = Dao.getAllPosts();
-        List<Post> notDeleted = new ArrayList<>();
-        for (Post p :postList) {
+        List<SuperPost> postList = Dao.getAllPosts();
+        List<SuperPost> notDeleted = new ArrayList<>();
+        for (SuperPost p :postList) {
             if (p.isHidden()) {
                 notDeleted.add(p);
             }
@@ -64,7 +73,7 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return SUCCESS;
     }
 
-    public String restoreDeletedPost() throws Exception {
+    public String restoreHiddenPost() throws Exception {
         Dao.restorePost(post);
         return SUCCESS;
     }
@@ -75,23 +84,23 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return SUCCESS;
     }
 
-    public String addReplay() throws Exception {
-        Dao.addReply(post);
+    public String addReply() throws Exception {
+        Dao.addReply(reply);
 
         return SUCCESS;
     }
+//
+//    public String deleteReply() throws Exception {
+//        Dao.deleteReply(post);
+//
+//        return SUCCESS;
+//    }
 
-    public String deleteReply() throws Exception {
-        Dao.deleteReply(post);
-
-        return SUCCESS;
-    }
-
-    public Post getPost() {
+    public SuperPost getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public void setPost(SuperPost post) {
         this.post = post;
     }
 
@@ -99,7 +108,23 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return posts;
     }
 
-    private void setPosts(List<Post> posts) {
+    private void setPosts(List<SuperPost> posts) {
         this.posts = posts;
     }
+
+    public Reply getReply() {
+        return reply;
+    }
+
+    public void setReply(Reply reply) {
+        this.reply = reply;
+    }
+
+//    public List<Reply> getReplies() {
+//        return replies;
+//    }
+//
+//    public void setReplies(List<Reply> replies) {
+//        this.replies = replies;
+//    }
 }

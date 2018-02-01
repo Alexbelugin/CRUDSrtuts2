@@ -32,7 +32,7 @@
             <result name="success" type="redirectAction">index</result>
         </action>
 
-        <action name="restorePost" class="eu.belugin.actions.MainAction" method="restoreDeletedPost">
+        <action name="restorePost" class="eu.belugin.actions.MainAction" method="restoreHiddenPost">
             <result name="success" type="redirectAction">hiddenPosts</result>
         </action>
 
@@ -40,7 +40,7 @@
             <result name="success">/pages/reply-editing.jsp</result>
         </action>
 
-        <action name="saveReply" class="eu.belugin.actions.MainAction" method="addReplay">
+        <action name="saveReply" class="eu.belugin.actions.MainAction" method="addReply">
             <result name="success" type="redirectAction">index</result>
         </action>
 

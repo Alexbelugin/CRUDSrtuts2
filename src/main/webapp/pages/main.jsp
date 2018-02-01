@@ -5,9 +5,18 @@
     <title>Main Zabor</title>
 </head>
 <body>
-<div><a href="<s:url action="editPost"/>">New Post</a></div>
+<div>
+    <%--<s:url action="editPost" var="url">--%>
+        <%--<s:param name="post.id" value="null"/>--%>
+    <%--</s:url>--%>
+    <%--<a href="<s:property value="#url"/>">New Post</a>--%>
+    <a href="<s:url action="editPost"/>">New Post</a>
+</div>
 <div><a href="<s:url action="hiddenPosts"/>">Hidden Posts</a></div>
 <br><br>
+<s:if test="posts.size() > 0">
+    <p>BOLWE NULLLJJJAAA</p>
+</s:if>
 <table border="1">
     <s:iterator value="posts">
         <tr>
@@ -17,10 +26,10 @@
                     <tr>
                         <td><s:property value="txt"/></td>
                     </tr>
-                    <s:iterator value="replies">
+                    <s:iterator value="replies" var="reply">
                         <tr>
-                            <td><s:property value="id"/></td>
-                            <td><s:property value="txt"/></td>
+                            <td><s:property value="#reply.id"/></td>
+                            <td><s:property value="#reply.txt"/></td>
                             <%--<td><s:property value="repliedPostId"/></td>--%>
                             <td>
                                 <%--<s:url action="addReply" var="url">--%>
@@ -32,21 +41,21 @@
                                 <%--</s:url>--%>
                                 <%--<a href="<s:property value="#url"/>">Edit</a>--%>
                                     <%--&lt;%&ndash;&nbsp;&nbsp;&nbsp;&ndash;%&gt;--%>
-                                <s:url action="deleteReply" var="url">
-                                    <s:param name="post.id" value="repliedPostId"/>
-                                    <s:param name="post.replyPointer" value="id"/><%--НЕ ПЕРЕДАЕТ ПАРАМЕТР--%>
-                                </s:url>
-                                <a href="<s:property value="#url"/>">Delete</a>
+                                <%--<s:url action="deleteReply" var="url">--%>
+                                    <%--<s:param name="post.id" value="repliedPostId"/>--%>
+                                    <%--<s:param name="post.replyPointer" value="id"/>&lt;%&ndash;НЕ ПЕРЕДАЕТ ПАРАМЕТР&ndash;%&gt;--%>
+                                <%--</s:url>--%>
+                                <%--<a href="<s:property value="#url"/>">Delete</a>--%>
                             </td>
                         </tr>
                     </s:iterator>
                 </table>
             </td>
             <td>
-                <s:url action="addReply" var="url">
+                <s:url action="addReply" var="addReplyUrl">
                     <s:param name="post.id" value="id"/>
                 </s:url>
-                <a href="<s:property value="#url"/>">Reply</a>
+                <s:a href="%{addReplyUrl}" escapeAmp="false">Reply</s:a>
                 <%--<a href="<s:url action="editPost"><s:param name="post.id" value="id"/></s:url>">Edit</a>--%>
                 <s:url action="editPost" var="url">
                     <s:param name="post.id" value="id"/>

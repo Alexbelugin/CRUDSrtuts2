@@ -6,8 +6,8 @@
 </head>
 <body>
 <s:form action="saveReply">
-    <s:textfield name="post.replyTxt" value="%{post.replyTxt}" label="Reply"/>
-    <s:hidden name="post.id" value="%{post.id}"/>
+    <s:textfield name="reply.txt" value="%{reply.txt}" label="Reply"/>
+    <s:hidden name="reply.superPostId" value="%{post.id}"/>
     <s:submit value="Submit"/>
     <s:submit value="Cancel" action="index"/>
 </s:form>

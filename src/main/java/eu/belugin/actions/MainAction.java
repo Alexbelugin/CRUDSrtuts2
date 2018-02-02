@@ -1,22 +1,24 @@
 package eu.belugin.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.interceptor.ValidationAware;
 import eu.belugin.DAO.Dao;
-import eu.belugin.model.Reply;
-import eu.belugin.model.SuperPost;
+import eu.belugin.model.Post;
+import eu.belugin.model.User;
+import org.apache.struts2.ServletActionContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainAction extends ActionSupport /*implements Preparable*/ {
-
-    private SuperPost post;
-    private Reply reply;
-    private List<SuperPost> posts;
-//    private List<Reply> replies;
+public class MainAction extends ActionSupport implements ValidationAware /*implements Preparable*/ {
+    
+    private Post post;
+    private List<Post> posts;
+    private User user;
+    private Integer id;
 
     @Override
-    public String execute() throws Exception {
+    public String execute() {
         if (post != null && post.getId() != null) {
             post = Dao.getPost(post.getId());
         }
@@ -35,15 +37,15 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
 //    }
 
     public String showPosts() {
-        List<SuperPost> postList = Dao.getAllPosts();
-        List<SuperPost> notDeleted = new ArrayList<>();
-        for (SuperPost p :postList) {
+        List<Post> postList = Dao.getAllReplies();
+        List<Post> notDeleted = new ArrayList<>();
+        for (Post p : postList) {
             if (!p.isHidden()) {
                 notDeleted.add(p);
             }
         }
         setPosts(notDeleted);
-//        setReplies(Dao.getReplies());
+//        setPosts(Dao.getPosts());
 
         return SUCCESS;
     }
@@ -54,15 +56,33 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return SUCCESS;
     }
 
+//    TODO add validation empty reply
+    public void validateAddPost() {
+        if (user != null && user.getLogin() != null && !user.getLogin().isEmpty()) {
+            if (Dao.getLogins().contains(user.getLogin())) {
+                for (User user1 : Dao.getUsers()) {
+                    if (!user.getPassword().equals(user1.getPassword())) {
+                        addActionError("Password is wrong");
+                    }
+                }
+            }
+        }
+
+
+        if (post == null || post.getTxt() == null || post.getTxt().isEmpty()) {
+            addActionError("txt not pustoj");
+        }
+    }
+
     public String hidePost() throws Exception {
         Dao.hidePost(post);
         return SUCCESS;
     }
 
     public String showDeletedPosts() throws Exception {
-        List<SuperPost> postList = Dao.getAllPosts();
-        List<SuperPost> notDeleted = new ArrayList<>();
-        for (SuperPost p :postList) {
+        List<Post> postList = Dao.getAllReplies();
+        List<Post> notDeleted = new ArrayList<>();
+        for (Post p : postList) {
             if (p.isHidden()) {
                 notDeleted.add(p);
             }
@@ -85,8 +105,13 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     }
 
     public String addReply() throws Exception {
-        Dao.addReply(reply);
+        Dao.addReply(post, id);
 
+        return SUCCESS;
+    }
+
+    public String deleteReply() throws Exception {
+        Dao.deleteReply(id);
         return SUCCESS;
     }
 //
@@ -96,11 +121,7 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
 //        return SUCCESS;
 //    }
 
-    public SuperPost getPost() {
-        return post;
-    }
-
-    public void setPost(SuperPost post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 
@@ -108,23 +129,39 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return posts;
     }
 
-    private void setPosts(List<SuperPost> posts) {
+    private void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
-    public Reply getReply() {
-        return reply;
+    public Post getPost() {
+        return post;
     }
 
-    public void setReply(Reply reply) {
-        this.reply = reply;
-    }
-
-//    public List<Reply> getReplies() {
-//        return replies;
+//    public List<Post> getPosts() {
+//        return posts;
 //    }
 //
-//    public void setReplies(List<Reply> replies) {
-//        this.replies = replies;
+//    public void setPosts(List<Post> posts) {
+//        this.posts = posts;
 //    }
+
+    public String printString() {
+        return "ALALAAL";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

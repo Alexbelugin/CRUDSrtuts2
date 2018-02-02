@@ -1,46 +1,34 @@
 package eu.belugin.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
     private Integer id;
     private String txt;
-    private boolean isHidden;
-    private List<Post> replies;
-    private String replyTxt;
-    private Integer replyPointer;
-    private Integer repliedPostId;
+    private Post parent;
+    private User user;
+    private List<Post> childPosts;
+    private boolean hidden;
 
-    public Post() {
+    public Post() {}
 
+    public Post(Integer id, String txt, Post parent, List<Post> childPosts, boolean hidden) {
+        this.id = id;
+        this.txt = txt;
+        this.parent = parent;
+        this.childPosts = childPosts;
+        this.hidden = hidden;
     }
 
     public Post(Integer id, String txt) {
         this.id = id;
         this.txt = txt;
-        this.isHidden = false;
-//        this.replies = new ArrayList<>();
     }
 
-    public Post(Integer id, String txt, boolean isHidden) {
+    public Post(Integer id, String txt, User user) {
         this.id = id;
         this.txt = txt;
-        this.isHidden = isHidden;
-//        this.replies = new ArrayList<>();
-    }
-
-    public Post(Integer id, String txt, Integer repliedPostId) {
-        this.id = id;
-        this.txt = txt;
-        this.repliedPostId = repliedPostId;
-    }
-
-    public Post(Integer id, String txt, boolean isHidden, List<Post> replies) {
-        this.id = id;
-        this.txt = txt;
-        this.isHidden = isHidden;
-        this.replies = replies;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -59,51 +47,35 @@ public class Post {
         this.txt = txt;
     }
 
+    public Post getParent() {
+        return parent;
+    }
+
+    public void setParent(Post parent) {
+        this.parent = parent;
+    }
+
+    public List<Post> getChildPosts() {
+        return childPosts;
+    }
+
+    public void setChildPosts(List<Post> childPosts) {
+        this.childPosts = childPosts;
+    }
+
     public boolean isHidden() {
-        return isHidden;
+        return hidden;
     }
 
     public void setHidden(boolean hidden) {
-        isHidden = hidden;
+        this.hidden = hidden;
     }
 
-    public List<Post> getReplies() {
-        return replies;
+    public User getUser() {
+        return user;
     }
 
-    public Post getReplyFromReplies(Integer id) {
-        return replies.get(id - 1);
-    }
-
-    public void setReplies(List<Post> replies) {
-        this.replies = replies;
-    }
-
-    public void setReplyToReplies(Post post) {
-        this.replies.add(post);
-    }
-
-    public String getReplyTxt() {
-        return replyTxt;
-    }
-
-    public void setReplyTxt(String replyTxt) {
-        this.replyTxt = replyTxt;
-    }
-
-    public Integer getReplyPointer() {
-        return replyPointer;
-    }
-
-    public void setReplyPointer(Integer replyPointer) {
-        this.replyPointer = replyPointer;
-    }
-
-    public Integer getRepliedPostId() {
-        return repliedPostId;
-    }
-
-    public void setRepliedPostId(Integer repliedPostId) {
-        this.repliedPostId = repliedPostId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

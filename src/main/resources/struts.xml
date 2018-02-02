@@ -24,7 +24,7 @@
             <result name="success" type="redirectAction">hiddenPosts</result>
         </action>
 
-        <action name="hiddenPosts" class="eu.belugin.actions.MainAction" method="showDeletedPosts">
+        <action name="hiddenPosts" class="eu.belugin.actions.MainAction" method="showHiddenPosts">
             <result name="success">WEB-INF/pages/hidden-posts.jsp</result>
         </action>
 

@@ -5,9 +5,9 @@ import com.opensymphony.xwork2.interceptor.ValidationAware;
 import eu.belugin.DAO.Dao;
 import eu.belugin.model.Post;
 import eu.belugin.model.User;
-import org.apache.struts2.ServletActionContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainAction extends ActionSupport implements ValidationAware /*implements Preparable*/ {
@@ -44,6 +44,7 @@ public class MainAction extends ActionSupport implements ValidationAware /*imple
                 notDeleted.add(p);
             }
         }
+        Collections.reverse(notDeleted);
         setPosts(notDeleted);
 //        setPosts(Dao.getPosts());
 
@@ -79,16 +80,16 @@ public class MainAction extends ActionSupport implements ValidationAware /*imple
         return SUCCESS;
     }
 
-    public String showDeletedPosts() throws Exception {
+    public String showHiddenPosts() throws Exception {
         List<Post> postList = Dao.getAllReplies();
-        List<Post> notDeleted = new ArrayList<>();
+        List<Post> hidden = new ArrayList<>();
         for (Post p : postList) {
             if (p.isHidden()) {
-                notDeleted.add(p);
+                hidden.add(p);
             }
         }
-
-        setPosts(notDeleted);
+        Collections.reverse(hidden);
+        setPosts(hidden);
 
         return SUCCESS;
     }

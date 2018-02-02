@@ -1,16 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
 <html>
 <head>
     <title>Hided Posts</title>
 </head>
 <body>
 <div><a href="<s:url action="index"/>">Zabor</a></div>
-<table>
+<table border="1">
     <s:iterator value="posts">
         <tr>
-            <td><s:property value="id"/></td>
+            <%--<td><s:property value="id"/></td>--%>
             <td><s:property value="txt"/></td>
             <td>
                 <s:url action="restorePost" var="url">

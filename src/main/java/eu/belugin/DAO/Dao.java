@@ -15,21 +15,27 @@ public class Dao {
         posts = new ArrayList<>();
         logins = new HashSet<>();
         User user = new User("Beluginni","Beluginni");
-        Post post1 = new Post(getCounter(), "superParent", user);
-        Post post2 = new Post(getCounter(), "child1");
-        Post post3 = new Post(getCounter(), "child2");
-        Post post4 = new Post(getCounter(), "child3");
+        Post post1 = new Post(getCounter(), "I'll send Tesla to Mars", user);
+        Post post2 = new Post(getCounter(), "Take mine as well");
+        Post post3 = new Post(getCounter(), "Just give it to me");
+        Post post4 = new Post(getCounter(), "I'm full!");
+        Post post5 = new Post(getCounter(), "U r fool");
+        Post post6 = new Post(getCounter(), "hi!");
 
         post1.setChildPosts(new ArrayList<>(Arrays.asList(post2, post3)));
+        post4.setChildPosts(new ArrayList<>(Arrays.asList(post5, post6)));
         post2.setParent(post1);
         post3.setParent(post1);
-        post4.setParent(post2);
-        post2.setChildPosts(Collections.singletonList(post4));
+        post5.setParent(post4);
+        post6.setParent(post4);
+//        post2.setChildPosts(Collections.singletonList(post4));
 
         posts.add(post1);
         posts.add(post2);
         posts.add(post3);
         posts.add(post4);
+        posts.add(post5);
+        posts.add(post6);
 
         users = new ArrayList<>();
         users.add(user);

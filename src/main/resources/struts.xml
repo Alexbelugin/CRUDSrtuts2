@@ -29,7 +29,6 @@
         </action>
 
         <action name="save" class="eu.belugin.actions.MainAction" method="addPost">
-
             <result name="success" type="redirectAction">index</result>
             <result name="input">WEB-INF/pages/post-editing.jsp</result>
         </action>
@@ -44,6 +43,7 @@
 
         <action name="saveReply" class="eu.belugin.actions.MainAction" method="addReply">
             <result name="success" type="redirectAction">index</result>
+            <result name="input">WEB-INF/pages/reply-editing.jsp</result>
         </action>
 
         <action name="deleteReply" class="eu.belugin.actions.MainAction" method="deleteReply">

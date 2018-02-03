@@ -7,9 +7,10 @@
     <title>Editing</title>
 </head>
 <body>
-<s:form action="save">
+<s:actionerror/>
+<s:form action="save" validate="true">
     <s:textfield name="post.txt" value="%{post.txt}" label="Post" requiredLabel="true"/>
-    <s:textfield name="user.login" value="%{user.login}" label="Login"/>
+    <s:textfield name="user.name" value="%{user.name}"  label="Login"/>
     <s:password name="user.password" value="%{user.password}" label="Password"/>
     <s:hidden name="post.id" value="%{post.id}"/>
     <s:submit value="Submit"/>

@@ -35,20 +35,23 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <s:form action="save">
-                        <s:textfield name="post.txt" value="%{post.txt}" label="Post" requiredLabel="true"/>
-                        <s:textfield name="user.login" value="%{user.login}" label="Login"/>
-                        <s:password name="user.password" value="%{user.password}" label="Password"/>
+                    <s:actionerror/>
+                    <s:form action="save" validate="true">
+                        <s:textfield cssClass="form-control" name="post.title" value="%{post.title}" label="Title"/>
+                        <s:textarea cssClass="form-control" name="post.txt" value="%{post.txt}" label="Post"
+                                     requiredLabel="true"/>
+                        <s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>
+                        <s:password cssClass="form-control" name="user.password" value="%{user.password}" label="Password"/>
                         <s:hidden name="post.id" value="%{post.id}"/>
-                        <s:submit value="Submit"/>
+                        <s:submit cssClass="btn btn-primary" value="Submit"/>
                         <%--<s:submit value="Cancel" action="index"/>--%>
                     </s:form>
                 </div>
-                <div class="modal-footer">
+                <%--<div class="modal-footer">--%>
                     <%--<input class="btn btn-primary" type="submit" value="Submit">--%>
-                <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-                <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
-                </div>
+                    <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+                    <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
+                <%--</div>--%>
             </div>
         </div>
     </div>
@@ -64,21 +67,24 @@
 <div class="container">
     <s:iterator value="posts">
         <s:if test="parent == null">
-            <div class="card bg-light mb-3" style="width: 60rem;">
-                <div class="card-header">Post title</div>
+            <div class="card bg-light mb-3" style="width: 50rem;">
+                <div class="card-header"><s:property value="title"/></div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">name</h6>
-                    <p class="card-text">
-                    <table>
-                        <tr>
-                            <td align="center" style="width: 45rem;">
-                                <s:property value="txt"/>
-                            </td>
-                            <td align="right">
+                    <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/></h6>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col" align="left" style="width: 35rem;">
+                                <div class="card">
+                                    <div class="card-body" style="width: 30rem;">
+                                        <s:property value="txt"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" align="right">
                                 <s:iterator value="childPosts" var="child">
                                     <div class="card" style="width: 12rem;">
                                         <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted">name</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/></h6>
                                             <p class="card-text">
                                                 <s:property value="#child.txt"/>
                                             </p>
@@ -86,39 +92,32 @@
                                                 <s:param name="id" value="id"/>
                                             </s:url>
                                             <s:a href="%{deleteReplyUrl}" escapeAmp="false">X</s:a>
-                                                <%--<a href="#" class="card-link">Card link</a>--%>
-                                                <%--<a href="#" class="card-link">Another link</a>--%>
                                         </div>
                                     </div>
                                 </s:iterator>
-                            </td>
-                        </tr>
-                    </table>
-                    </p>
-                        <%--<a href="#" class="card-link">--%>
-                    <s:url action="addReply" var="addReplyUrl">
-                        <s:param name="id" value="id"/>
-                    </s:url>
-                    <s:a href="%{addReplyUrl}" escapeAmp="false">Reply</s:a>
-                        <%--</a>--%>
-                        <%--<a href="#" class="card-link">--%>
-                    <s:url action="editPost" var="url">
-                        <s:param name="post.id" value="id"/>
-                    </s:url>
-                    <a href="<s:property value="#url"/>" class="card-link">Edit</a>
-                        <%--</a>--%>
-                        <%--<a href="#" class="card-link">--%>
-                    <s:url action="hidePost" var="url">
-                        <s:param name="post.id" value="id"/>
-                    </s:url>
-                    <a href="<s:property value="#url"/>" class="card-link">Hide</a>
-                        <%--</a>--%>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <s:url action="addReply" var="addReplyUrl">
+                                <s:param name="id" value="id"/>
+                            </s:url>
+                            <s:a href="%{addReplyUrl}" escapeAmp="false" cssClass="card-link">Reply</s:a>
+                            <s:url action="editPost" var="editPostUrl">
+                                <s:param name="post.id" value="id"/>
+                                <s:param name="user.name" value="user.name"/>
+                            </s:url>
+                            <s:a href="%{editPostUrl}" escapeAmp="false" cssClass="card-link">Edit</s:a>
+                            <s:url action="hidePost" var="hidePostUrl">
+                                <s:param name="post.id" value="id"/>
+                            </s:url>
+                            <s:a href="%{hidePostUrl}" escapeAmp="false" cssClass="card-link">Hide</s:a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </s:if>
     </s:iterator>
 </div>
-<br><br><br><br><br><br><br><br>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

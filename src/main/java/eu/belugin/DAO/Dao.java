@@ -7,20 +7,20 @@ import java.util.*;
 
 public class Dao {
     private static List<Post> posts;
-    private static Set<String> logins;
+    private static Set<String> names;
     private static List<User> users;
     private static Integer counter = 0;
 
     static {
         posts = new ArrayList<>();
-        logins = new HashSet<>();
-        User user = new User("Beluginni","Beluginni");
-        Post post1 = new Post(getCounter(), "I'll send Tesla to Mars", user);
-        Post post2 = new Post(getCounter(), "Take mine as well");
-        Post post3 = new Post(getCounter(), "Just give it to me");
-        Post post4 = new Post(getCounter(), "I'm full!");
-        Post post5 = new Post(getCounter(), "U r fool");
-        Post post6 = new Post(getCounter(), "hi!");
+        names = new HashSet<>();
+        User user = new User("Elon Musk","12345");
+        Post post1 = new Post(getCounter(),"Stars are the limit", "I'll send Tesla to Mars", user);
+        Post post2 = new Post(getCounter(), "Take mine as well", new User());
+        Post post3 = new Post(getCounter(), "Just give it to me", new User());
+        Post post4 = new Post(getCounter(), "Not a joke", "I'm full!", new User());
+        Post post5 = new Post(getCounter(), "U r fool", new User());
+        Post post6 = new Post(getCounter(), "hi!", new User());
 
         post1.setChildPosts(new ArrayList<>(Arrays.asList(post2, post3)));
         post4.setChildPosts(new ArrayList<>(Arrays.asList(post5, post6)));
@@ -40,7 +40,7 @@ public class Dao {
         users = new ArrayList<>();
         users.add(user);
         for (User user1 : users) {
-            logins.add(user1.getLogin());
+            names.add(user1.getName());
         }
     }
 
@@ -95,10 +95,11 @@ public class Dao {
 //        posts.add(new Postold(posts.size() + 1, txt));
 //    }
 
-    public static void addPost(Post post) {
+    public static void addPost(Post post, User user) {
         if (post.getId() == null) {
             post.setId(getCounter());
             posts.add(post);
+            userNameCheck(post,user);
         } else {
             for (Post postToEdit : posts) {
                 if (post.getId().equals(postToEdit.getId())) {
@@ -108,7 +109,7 @@ public class Dao {
         }
     }
 
-    public static void addReply(Post post, Integer id) {
+    public static void addReply(Post post, Integer id, User user) {
         for (Post post1 : posts) {
             if (post1.getId().equals(id)) {
                 post.setParent(post1);
@@ -120,7 +121,19 @@ public class Dao {
             }
         }
         posts.add(post);
+        userNameCheck(post,user);
+    }
 
+    public static void userNameCheck(Post post, User user) {
+        if (user.getName().equals("") || user.getName().equals("anonymous")) {
+            post.setUser(new User());
+        } else if (!user.getName().equals("") && names.contains(user.getName())) {
+            post.setUser(user);
+        } else if (user.getName() != null && !user.getName().equals("anonymous")) {
+            names.add(user.getName());
+            users.add(user);
+            post.setUser(user);
+        }
     }
 
     public static boolean deleteReply(Integer id) {
@@ -179,12 +192,12 @@ public class Dao {
         return posts;
     }
 
-    public static Set<String> getLogins() {
-        return logins;
+    public static Set<String> getNames() {
+        return names;
     }
 
-    public static void setLogins(Set<String> logins) {
-        Dao.logins = logins;
+    public static void setNames(Set<String> names) {
+        Dao.names = names;
     }
 
     public static List<User> getUsers() {

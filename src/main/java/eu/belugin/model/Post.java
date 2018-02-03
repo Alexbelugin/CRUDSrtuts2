@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Post {
     private Integer id;
+    private String title;
     private String txt;
     private Post parent;
     private User user;
@@ -29,6 +30,19 @@ public class Post {
         this.id = id;
         this.txt = txt;
         this.user = user;
+    }
+
+    public Post(Integer id, String title, String txt, User user) {
+        this.id = id;
+        this.title = title;
+        this.txt = txt;
+        this.user = user;
+    }
+
+    public Post(Integer id, String title, String txt) {
+        this.id = id;
+        this.title = title;
+        this.txt = txt;
     }
 
     public Integer getId() {
@@ -77,5 +91,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -1,24 +1,24 @@
 package eu.belugin.model;
 
 public class User {
-    private String login;
+    private String name;
     private String password;
 
     public User() {
-
+        this.name = "anonymous";
     }
 
-    public User(String login, String password) {
-        this.login = login;
+    public User(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 
-    public String getLogin() {
-        return login;
+    public String getName() {
+        return name;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

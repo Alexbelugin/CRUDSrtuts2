@@ -1,7 +1,6 @@
 package eu.belugin.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.interceptor.ValidationAware;
 import eu.belugin.DAO.Dao;
 import eu.belugin.model.Post;
 import eu.belugin.model.User;
@@ -10,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainAction extends ActionSupport implements ValidationAware /*implements Preparable*/ {
-    
+public class MainAction extends ActionSupport /*implements Preparable*/ {
+
     private Post post;
     private List<Post> posts;
     private User user;
@@ -52,27 +51,38 @@ public class MainAction extends ActionSupport implements ValidationAware /*imple
     }
 
     public String addPost() throws Exception {
-        Dao.addPost(post);
+        Dao.addPost(post, user);
 
         return SUCCESS;
     }
 
-//    TODO add validation empty reply
-    public void validateAddPost() {
-        if (user != null && user.getLogin() != null && !user.getLogin().isEmpty()) {
-            if (Dao.getLogins().contains(user.getLogin())) {
+    //    TODO add validation empty reply
+    public void validation() {
+        if (user != null && user.getName() != null && !user.getName().isEmpty()) {
+            if (Dao.getNames().contains(user.getName())) {
                 for (User user1 : Dao.getUsers()) {
-                    if (!user.getPassword().equals(user1.getPassword())) {
-                        addActionError("Password is wrong");
+                    if (user.getName().equals(user1.getName())) {
+                        if (!user.getPassword().equals(user1.getPassword())) {
+                            addActionError("Password is wrong");
+                        }
                     }
                 }
             }
         }
-
-
         if (post == null || post.getTxt() == null || post.getTxt().isEmpty()) {
-            addActionError("txt not pustoj");
+            addActionError("Type something");
         }
+//        if (post.getUser().getName().equals("anonymous")) {
+//            addActionError("Choose the name");
+//        }
+    }
+
+    public void validateAddPost() {
+        validation();
+    }
+
+    public void validateAddReply() {
+        validation();
     }
 
     public String hidePost() throws Exception {
@@ -106,7 +116,7 @@ public class MainAction extends ActionSupport implements ValidationAware /*imple
     }
 
     public String addReply() throws Exception {
-        Dao.addReply(post, id);
+        Dao.addReply(post, id, user);
 
         return SUCCESS;
     }
@@ -147,7 +157,7 @@ public class MainAction extends ActionSupport implements ValidationAware /*imple
 //    }
 
     public String printString() {
-        return "ALALAAL";
+        return "";
     }
 
     public Integer getId() {

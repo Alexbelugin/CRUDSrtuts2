@@ -45,20 +45,37 @@ public class Dao {
         }
     }
 
-//    public static List<Post> getPosts() {
+    //    public static List<Post> getPosts() {
 //        return posts;
 //    }
 //
 //    public static void setReplies(List<Post> posts) {
 //        Dao.posts = posts;
 //    }
+    public static String deletePostCheck(Post post, User user) {
+        if (user.getName().equals(MainAction.getANON())) {
+            deletePost(post);
+            return MainAction.SUCCESS;
+        } else {
+            for (User user1 :users) {
+                if (user.getName().equals(user1.getName())) {
+                    if (user.getPassword() == null || !user.getPassword().equals(user1.getPassword())) {
+                        return MainAction.ERROR;
+                    } else {
+                        deletePost(post);
+                        return MainAction.SUCCESS;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-
-    public static void deletePost(Integer id) {
+    private static void deletePost(Post post) {
         Post d = null;
-        for (Post post : posts) {
-            if (post.getId().equals(id)) {
-                d = post;
+        for (Post post1 : posts) {
+            if (post1.getId().equals(post.getId())) {
+                d = post1;
             }
         }
         if (d != null) {
@@ -109,12 +126,31 @@ public class Dao {
         }
     }
 
-    public static boolean deleteReply(Integer id) {
+    public static String deleteReplyCheck(Post post, User user) {
+        if (user.getName().equals(MainAction.getANON())) {
+            deleteReply(post);
+            return MainAction.SUCCESS;
+        } else {
+            for (User user1 :users) {
+                if (user.getName().equals(user1.getName())) {
+                    if (user.getPassword() == null || !user.getPassword().equals(user1.getPassword())) {
+                        return MainAction.ERROR;
+                    } else {
+                        deleteReply(post);
+                        return MainAction.SUCCESS;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static boolean deleteReply(Post post) {
         for (Post post1 : posts) {
-            if (post1.getId().equals(id)) {
-                for (Post post : posts) {
-                    if (post1.getParent().getId().equals(post.getId())) {
-                        post.getReplies().remove(post1);
+            if (post1.getId().equals(post.getId())) {
+                for (Post post2 : posts) {
+                    if (post1.getParent().getId().equals(post2.getId())) {
+                        post2.getReplies().remove(post1);
                         posts.remove(post1);
                         return true;
                     }

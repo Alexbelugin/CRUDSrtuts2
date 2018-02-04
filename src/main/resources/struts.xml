@@ -28,16 +28,22 @@
 
         <action name="hidePost" class="eu.belugin.actions.MainAction" method="hidePost">
             <result name="success" type="redirectAction">index</result>
-            <result name="error">WEB-INF/pages/enter-password.jsp</result>
+            <result name="error">/WEB-INF/pages/enter-password-hide.jsp</result>
         </action>
 
-        <action name="passwordCheck" class="eu.belugin.actions.MainAction" method="hidePost">
+        <action name="passwordCheckHide" class="eu.belugin.actions.MainAction" method="hidePost">
             <result name="success" type="redirectAction">index</result>
-            <result name="input">/WEB-INF/pages/enter-password.jsp</result>
+            <result name="input">/WEB-INF/pages/enter-password-hide.jsp</result>
         </action>
 
         <action name="deletePost" class="eu.belugin.actions.MainAction" method="deletePost">
             <result name="success" type="redirectAction">hiddenPosts</result>
+            <result name="error">/WEB-INF/pages/enter-password-del-post.jsp</result>
+        </action>
+
+        <action name="passwordCheckDelPost" class="eu.belugin.actions.MainAction" method="deletePost">
+            <result name="success" type="redirectAction">hiddenPosts</result>
+            <result name="input">/WEB-INF/pages/enter-password-del-post.jsp</result>
         </action>
 
         <action name="hiddenPosts" class="eu.belugin.actions.MainAction" method="showHiddenPosts">
@@ -59,6 +65,22 @@
 
         <action name="deleteReply" class="eu.belugin.actions.MainAction" method="deleteReply">
             <result name="success" type="redirectAction">index</result>
+            <result name="error">/WEB-INF/pages/enter-password-del-reply.jsp</result>
         </action>
+
+        <action name="passwordCheckDelReply" class="eu.belugin.actions.MainAction" method="deleteReply">
+            <result name="success" type="redirectAction">index</result>
+            <result name="input">/WEB-INF/pages/enter-password-del-reply.jsp</result>
+        </action>
+
+        <!--<action name="deletePost" class="eu.belugin.actions.MainAction" method="deletePost">-->
+            <!--<result name="success" type="redirectAction">hiddenPosts</result>-->
+            <!--<result name="error">/WEB-INF/pages/enter-password-del-post.jsp</result>-->
+        <!--</action>-->
+
+        <!--<action name="passwordCheckDelPost" class="eu.belugin.actions.MainAction" method="deletePost">-->
+            <!--<result name="success" type="redirectAction">hiddenPosts</result>-->
+            <!--<result name="input">/WEB-INF/pages/enter-password-del-post.jsp</result>-->
+        <!--</action>-->
     </package>
 </struts>

@@ -103,7 +103,8 @@
                                                 <s:property value="#child.txt"/>
                                             </p>
                                             <s:url action="deleteReply" var="deleteReplyUrl">
-                                                <s:param name="id" value="id"/>
+                                                <s:param name="post.id" value="id"/>
+                                                <s:param name="user.name" value="user.name"/>
                                             </s:url>
                                             <s:a href="%{deleteReplyUrl}" escapeAmp="false">X</s:a>
                                         </div>

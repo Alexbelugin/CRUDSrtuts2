@@ -19,19 +19,19 @@
                     <s:actionerror/>
                 </div>
             </s:if>
-            <s:form action="passwordCheck">
+            <s:form action="passwordCheckDelPost">
                 <s:hidden name="post.id" value="%{post.id}"/>
                 <s:hidden name="user.name" value="%{user.name}"/>
                 <s:password cssClass="form-control" name="user.password"/>
                 <s:submit cssClass="btn btn-primary" value="Submit"/>
-                <s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>
+                <s:submit cssClass="btn btn-secondary" value="Cancel" action="hiddenPosts"/>
             </s:form>
             <%--<s:form action="hidePost">--%>
-                <%--<s:hidden name="id" value="%{id}"/>--%>
-                <%--<s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>--%>
-                <%--<s:password cssClass="form-control" name="user.password" label="Password"/>--%>
-                <%--<s:submit cssClass="btn btn-primary" value="Submit"/>--%>
-                <%--<s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>--%>
+            <%--<s:hidden name="id" value="%{id}"/>--%>
+            <%--<s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>--%>
+            <%--<s:password cssClass="form-control" name="user.password" label="Password"/>--%>
+            <%--<s:submit cssClass="btn btn-primary" value="Submit"/>--%>
+            <%--<s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>--%>
             <%--</s:form>--%>
         </div>
     </div>

@@ -114,9 +114,20 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         }
     }
 
+    public void validateDeletePost() {
+        if (user.getPassword() != null) {
+            passwordMatch();
+        }
+    }
+
+    public void validateDeleteReply() {
+        if (user.getPassword() != null) {
+            passwordMatch();
+        }
+    }
+
     public String hidePost() throws Exception {
-        String result = Dao.hidePostCheck(post, user);
-        return result;
+        return Dao.hidePostCheck(post, user);
     }
 
     public String showHiddenPosts() throws Exception {
@@ -139,9 +150,7 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     }
 
     public String deletePost() throws Exception {
-        Dao.deletePost(post.getId());
-
-        return SUCCESS;
+        return Dao.deletePostCheck(post, user);
     }
 
     public String addReply() throws Exception {
@@ -151,8 +160,7 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     }
 
     public String deleteReply() throws Exception {
-        Dao.deleteReply(id);
-        return SUCCESS;
+        return Dao.deleteReplyCheck(post, user);
     }
 //
 //    public String deleteReply() throws Exception {

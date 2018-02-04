@@ -68,10 +68,17 @@
                         <s:param name="post.id" value="id"/>
                     </s:url>
                     <a href="<s:property value="#url"/> ">Restore</a>
-                    <s:url action="deletePost" var="url">
+                    <s:url action="deletePost" var="deletePostUrl">
                         <s:param name="post.id" value="id"/>
+                        <s:param name="user.name" value="user.name"/>
                     </s:url>
-                    <a href="<s:property value="#url"/> ">Delete</a>
+                    <s:a href="%{deletePostUrl}" escapeAmp="false" cssClass="card-link">Delete</s:a>
+                    <%--<a href="<s:property value="#url"/> ">Delete</a>--%>
+                    <%--<s:url action="hidePost" var="hidePostUrl">--%>
+                        <%--<s:param name="post.id" value="id"/>--%>
+                        <%--<s:param name="user.name" value="user.name"/>--%>
+                    <%--</s:url>--%>
+                    <%--<s:a href="%{hidePostUrl}" escapeAmp="false" cssClass="card-link">Hide</s:a>--%>
                 </div>
             </div>
         </div>

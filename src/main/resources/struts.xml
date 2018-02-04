@@ -7,6 +7,7 @@
 <struts>
     <constant name="struts.devMode" value="true" />
     <package name="main" namespace="/" extends="struts-default">
+        <default-action-ref name="index" />
 
         <action name="index" class="eu.belugin.actions.MainAction" method="showPosts">
             <result name="success">WEB-INF/pages/main.jsp</result>

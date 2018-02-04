@@ -26,7 +26,7 @@ public class Dao {
         Post post1 = new Post(getCounter(), "Stars are the limit", "I'll send Tesla to Mars", user);
         Post post2 = new Post(getCounter(), "Take mine as well", new User());
         Post post3 = new Post(getCounter(), "Just give it to me", new User());
-        Post post4 = new Post(getCounter(), "Not a joke", "I'm full!", new User());
+        Post post4 = new Post(getCounter(), "Not a joke", "I'm full!", new User(), true);
         Post post5 = new Post(getCounter(), "U r fool", new User());
         Post post6 = new Post(getCounter(), "hi!", new User());
         Post post7 = new Post(getCounter(), "Welcome! This is post's title",
@@ -41,16 +41,17 @@ public class Dao {
                 admin);
         Post post9 = new Post(getCounter(), "This is anonymous post. Hide it, edit it, delete it. Do what you want!",
                 new User());
-        Post post10 = new Post(getCounter(), "This is anonymous reply. Every body can delete it.",
+        Post post10 = new Post(getCounter(), "This is anonymous reply. Everybody can delete it.",
                 new User());
 
         post1.setReplies(new ArrayList<>(Arrays.asList(post2, post3)));
         post4.setReplies(new ArrayList<>(Arrays.asList(post5, post6)));
+        post7.setReplies(new ArrayList<>(Arrays.asList(post8, post10)));
         post2.setParent(post1);
         post3.setParent(post1);
         post5.setParent(post4);
         post6.setParent(post4);
-        post9.setParent(post7);
+        post8.setParent(post7);
         post10.setParent(post7);
 
 //        post2.setReplies(Collections.singletonList(post4));

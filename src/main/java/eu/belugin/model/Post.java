@@ -49,6 +49,14 @@ public class Post {
         this.txt = txt;
     }
 
+    public Post(Integer id, String title, String txt, User user, boolean hidden) {
+        this.id = id;
+        this.title = title;
+        this.txt = txt;
+        this.user = user;
+        this.hidden = hidden;
+    }
+
     public Integer getId() {
         return id;
     }

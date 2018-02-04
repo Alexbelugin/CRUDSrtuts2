@@ -25,7 +25,7 @@
                             label="Text"/>
                 <s:hidden name="id" value="%{id}"/>
                 <s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>
-                <s:textfield cssClass="form-control" name="user.password" label="Password"/>
+                <s:password cssClass="form-control" name="user.password" label="Password"/>
                 <s:submit cssClass="btn btn-primary" value="Submit"/>
                 <s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>
             </s:form>

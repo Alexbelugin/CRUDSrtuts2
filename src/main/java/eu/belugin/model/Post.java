@@ -8,16 +8,16 @@ public class Post {
     private String txt;
     private Post parent;
     private User user;
-    private List<Post> childPosts;
+    private List<Post> replies;
     private boolean hidden;
 
     public Post() {}
 
-    public Post(Integer id, String txt, Post parent, List<Post> childPosts, boolean hidden) {
+    public Post(Integer id, String txt, Post parent, List<Post> replies, boolean hidden) {
         this.id = id;
         this.txt = txt;
         this.parent = parent;
-        this.childPosts = childPosts;
+        this.replies = replies;
         this.hidden = hidden;
     }
 
@@ -69,12 +69,12 @@ public class Post {
         this.parent = parent;
     }
 
-    public List<Post> getChildPosts() {
-        return childPosts;
+    public List<Post> getReplies() {
+        return replies;
     }
 
-    public void setChildPosts(List<Post> childPosts) {
-        this.childPosts = childPosts;
+    public void setReplies(List<Post> replies) {
+        this.replies = replies;
     }
 
     public boolean isHidden() {

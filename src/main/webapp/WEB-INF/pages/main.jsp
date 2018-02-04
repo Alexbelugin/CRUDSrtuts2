@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
     <!-- Navbar content -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPost">
         New Post
     </button>
     <ul class="nav nav-pills justify-content-end">
@@ -31,16 +31,16 @@
 <%--<a href="<s:url action="editPost"/>">New Post</a>--%>
 <%--</div>--%>
 <%--<ul class="nav justify-content-center">--%>
-    <%--<li class="nav-item">--%>
-        <%--<a class="nav-link" href="#">Main Zabor</a>--%>
-        <%--&lt;%&ndash;<s:url action="addReply" var="addReplyUrl">&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<s:param name="id" value="id"/>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;</s:url>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<s:a href="%{addReplyUrl}" escapeAmp="false" cssClass="card-link" data-toggle="modal" data-target="#exampleModal">New Post</s:a>&ndash;%&gt;--%>
-    <%--</li>--%>
-    <%--<li class="nav-item">--%>
-        <%--<a class="nav-item" href="<s:url action="hiddenPosts"/>">Hidden Posts</a>--%>
-    <%--</li>--%>
+<%--<li class="nav-item">--%>
+<%--<a class="nav-link" href="#">Main Zabor</a>--%>
+<%--&lt;%&ndash;<s:url action="addReply" var="addReplyUrl">&ndash;%&gt;--%>
+<%--&lt;%&ndash;<s:param name="id" value="id"/>&ndash;%&gt;--%>
+<%--&lt;%&ndash;</s:url>&ndash;%&gt;--%>
+<%--&lt;%&ndash;<s:a href="%{addReplyUrl}" escapeAmp="false" cssClass="card-link" data-toggle="modal" data-target="#exampleModal">New Post</s:a>&ndash;%&gt;--%>
+<%--</li>--%>
+<%--<li class="nav-item">--%>
+<%--<a class="nav-item" href="<s:url action="hiddenPosts"/>">Hidden Posts</a>--%>
+<%--</li>--%>
 <%--</ul>--%>
 <div class="container">
     <div class="col col-md">
@@ -49,12 +49,12 @@
 </div>
 <div>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="newPost" tabindex="-1" role="dialog" aria-labelledby="newPostLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Post On Zabor</h5>
+                    <h5 class="modal-title" id="newPostLabel">New Post On Zabor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -80,7 +80,8 @@
     <s:iterator value="posts">
         <s:if test="parent == null">
             <div class="card bg-light mb-3" style="width: 50rem;">
-                <div class="card-header" style="background-color: #E8F1F2;" align="left"><s:property value="title"/></div>
+                <div class="card-header" style="background-color: #E8F1F2;" align="left"><s:property
+                        value="title"/></div>
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/> wrote:</h6>
                     <div class="container-fluid">
@@ -93,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="col" align="right">
-                                <s:iterator value="childPosts" var="child">
+                                <s:iterator value="replies" var="child">
                                     <div class="card" style="width: 12rem;">
                                         <div class="card-body">
                                             <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/>
@@ -122,6 +123,7 @@
                             <s:a href="%{editPostUrl}" escapeAmp="false" cssClass="card-link">Edit</s:a>
                             <s:url action="hidePost" var="hidePostUrl">
                                 <s:param name="post.id" value="id"/>
+                                <s:param name="user.name" value="user.name"/>
                             </s:url>
                             <s:a href="%{hidePostUrl}" escapeAmp="false" cssClass="card-link">Hide</s:a>
                         </div>

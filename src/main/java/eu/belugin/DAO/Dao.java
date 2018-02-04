@@ -1,5 +1,6 @@
 package eu.belugin.DAO;
 
+import eu.belugin.actions.MainAction;
 import eu.belugin.model.Post;
 import eu.belugin.model.User;
 
@@ -14,21 +15,21 @@ public class Dao {
     static {
         posts = new ArrayList<>();
         names = new HashSet<>();
-        User user = new User("Elon Musk","12345");
-        Post post1 = new Post(getCounter(),"Stars are the limit", "I'll send Tesla to Mars", user);
+        User user = new User("Elon Musk", "12345");
+        Post post1 = new Post(getCounter(), "Stars are the limit", "I'll send Tesla to Mars", user);
         Post post2 = new Post(getCounter(), "Take mine as well", new User());
         Post post3 = new Post(getCounter(), "Just give it to me", new User());
         Post post4 = new Post(getCounter(), "Not a joke", "I'm full!", new User());
         Post post5 = new Post(getCounter(), "U r fool", new User());
         Post post6 = new Post(getCounter(), "hi!", new User());
 
-        post1.setChildPosts(new ArrayList<>(Arrays.asList(post2, post3)));
-        post4.setChildPosts(new ArrayList<>(Arrays.asList(post5, post6)));
+        post1.setReplies(new ArrayList<>(Arrays.asList(post2, post3)));
+        post4.setReplies(new ArrayList<>(Arrays.asList(post5, post6)));
         post2.setParent(post1);
         post3.setParent(post1);
         post5.setParent(post4);
         post6.setParent(post4);
-//        post2.setChildPosts(Collections.singletonList(post4));
+//        post2.setReplies(Collections.singletonList(post4));
 
         posts.add(post1);
         posts.add(post2);
@@ -63,43 +64,14 @@ public class Dao {
         if (d != null) {
             posts.remove(d);
         }
-//        for (SuperPost post :posts) {
-//            post.setId(posts.indexOf(post));
-//        }
     }
 
-//    public static void deleteReply(SuperPost post) {
-////        Postold d = posts.get(post.getId() - 1);
-//
-////        posts.get(post.getId() - 1).getPosts().remove(post.getId() - 1);
-////        for (Postold p :posts.get(post.getId() - 1).getPosts()) {
-////            p.setId(posts.get(post.getId() - 1).getPosts().indexOf(p) + 1);
-////        }
-//
-//        Postold d = null;
-//        for (Postold p :posts.get(post.getId() - 1).getPosts()) {
-//            if (p.getId().equals(post.getReplyPointer())) {
-//                d = p;
-//            }
-//        }
-//        if (d != null) {
-//            posts.get(post.getId() - 1).getPosts().remove(d);
-//        }
-//        for (Postold p :posts.get(post.getId() - 1).getPosts()) {
-//            p.setId(posts.get(post.getId() - 1).getPosts().indexOf(p) + 1);
-//        }
-//
-//    }
-
-//    public static void addPost(String txt) {
-//        posts.add(new Postold(posts.size() + 1, txt));
-//    }
 
     public static void addPost(Post post, User user) {
         if (post.getId() == null) {
             post.setId(getCounter());
             posts.add(post);
-            userNameCheck(post,user);
+            userNameCheck(post, user);
         } else {
             for (Post postToEdit : posts) {
                 if (post.getId().equals(postToEdit.getId())) {
@@ -114,17 +86,17 @@ public class Dao {
             if (post1.getId().equals(id)) {
                 post.setParent(post1);
                 post.setId(getCounter());
-                if (post1.getChildPosts() == null) {
-                    post1.setChildPosts(new ArrayList<>());
+                if (post1.getReplies() == null) {
+                    post1.setReplies(new ArrayList<>());
                 }
-                post1.getChildPosts().add(post);
+                post1.getReplies().add(post);
             }
         }
         posts.add(post);
-        userNameCheck(post,user);
+        userNameCheck(post, user);
     }
 
-    public static void userNameCheck(Post post, User user) {
+    private static void userNameCheck(Post post, User user) {
         user.getName().trim();
         if (user.getName().equals("") || user.getName().equals("anonymous")) {
             post.setUser(new User());
@@ -138,11 +110,11 @@ public class Dao {
     }
 
     public static boolean deleteReply(Integer id) {
-        for (Post post1 :posts) {
+        for (Post post1 : posts) {
             if (post1.getId().equals(id)) {
-                for (Post post :posts) {
+                for (Post post : posts) {
                     if (post1.getParent().getId().equals(post.getId())) {
-                        post.getChildPosts().remove(post1);
+                        post.getReplies().remove(post1);
                         posts.remove(post1);
                         return true;
                     }
@@ -155,10 +127,9 @@ public class Dao {
     public static void editPost(Integer id, String txt) {
         posts.get(id).setTxt(txt);
     }
-//    TODO id != index (done)
-//    TODO return null ok?
+
     public static Post getPost(Integer id) {
-        for (Post post :posts) {
+        for (Post post : posts) {
             if (post.getId().equals(id)) {
                 return post;
             }
@@ -167,7 +138,26 @@ public class Dao {
         return null;
     }
 
-    public static void hidePost(Post post) {
+    public static String hidePostCheck(Post post, User user) {
+        if (user.getName().equals(MainAction.getANON())) {
+            hidePost(post);
+            return MainAction.SUCCESS;
+        } else {
+            for (User user1 :users) {
+                if (user.getName().equals(user1.getName())) {
+                    if (user.getPassword() == null || !user.getPassword().equals(user1.getPassword())) {
+                        return MainAction.ERROR;
+                    } else {
+                        hidePost(post);
+                        return MainAction.SUCCESS;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void hidePost(Post post) {
         for (Post postToHide : posts) {
             if (post.getId().equals(postToHide.getId())) {
                 postToHide.setHidden(true);
@@ -181,11 +171,10 @@ public class Dao {
                 postToRestore.setHidden(false);
             }
         }
-
 //        posts.get(post.getId()).setHidden(false);
     }
 
-    public static Integer getCounter() {
+    private static Integer getCounter() {
         return counter++;
     }
 

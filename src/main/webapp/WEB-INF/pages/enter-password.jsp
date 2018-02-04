@@ -1,40 +1,38 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
 
-
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Editing</title>
+    <title>Reply</title>
 </head>
 <body>
 <div class="container">
     <div class="card w-50">
         <div class="card-body">
-            <h5 class="card-title">Edit Post</h5>
-            <%--<p class="card-text">--%>
+            <h5 class="card-title">Enter Password</h5>
             <s:if test="hasActionErrors()">
                 <div class="alert alert-danger" role="alert">
                     <s:actionerror/>
                 </div>
             </s:if>
-            <s:form action="saveEdit">
-                <s:textarea cssClass="form-control-lg" name="post.txt" value="%{post.txt}" label="Text"
-                            requiredLabel="true" rows="6"/>
-                <s:if test="%{user.name != 'anonymous'}">
-                    <%--<s:property value="printString()"/>--%>
-                    <s:hidden name="user.name" value="%{user.name}"/>
-                    <s:password cssClass="form-control" name="user.password" value="%{user.password}" label="Password"/>
-                </s:if>
+            <s:form action="passwordCheck">
                 <s:hidden name="post.id" value="%{post.id}"/>
+                <s:hidden name="user.name" value="%{user.name}"/>
+                <s:password cssClass="form-control" name="user.password"/>
                 <s:submit cssClass="btn btn-primary" value="Submit"/>
                 <s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>
             </s:form>
-            <%--</p>--%>
-            <%--<a href="#" class="btn btn-primary">Go somewhere</a>--%>
+            <%--<s:form action="hidePost">--%>
+                <%--<s:hidden name="id" value="%{id}"/>--%>
+                <%--<s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>--%>
+                <%--<s:password cssClass="form-control" name="user.password" label="Password"/>--%>
+                <%--<s:submit cssClass="btn btn-primary" value="Submit"/>--%>
+                <%--<s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>--%>
+            <%--</s:form>--%>
         </div>
     </div>
 </div>

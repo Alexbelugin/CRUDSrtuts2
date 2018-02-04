@@ -42,7 +42,7 @@
                 <version>9.4.8.v20171121</version>
                 <configuration>
                     <stopKey>CTRL+C</stopKey>
-                    <stopPort>8888</stopPort>
+                    <stopPort>8999</stopPort>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <scanTargets>
                         <scanTarget>src/main/webapp/WEB-INF/web.xml</scanTarget>

@@ -15,7 +15,7 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     private List<Post> posts;
     private User user;
     private Integer id;
-    private final String ANON = "anonymous";
+    private static final String ANON = "anonymous";
 
     @Override
     public String execute() {
@@ -41,9 +41,6 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         Collections.reverse(notDeleted);
         setPosts(notDeleted);
 //        setPosts(Dao.getPosts());
-        id = null;
-        user = null;
-        post = null;
 
         return SUCCESS;
     }
@@ -54,31 +51,48 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return SUCCESS;
     }
 
-    public void validation() {
+//    public String editPost() {
+//
+//        return SUCCESS;
+//    }
+
+    private void validation() {
         if (user != null && user.getName() != null && !user.getName().isEmpty()) {
-            if (Dao.getNames().contains(user.getName())) {
-                for (User user1 : Dao.getUsers()) {
-                    if (user.getName().equals(user1.getName())) {
-                        if (!user.getPassword().equals(user1.getPassword())) {
-                            addActionError("Password is wrong");
-                        }
+            passwordMatch();
+        }
+        isPostEmpty();
+        if (user != null && user.getName() != null) {
+            if (!Dao.getNames().contains(user.getName())) {
+                if (user.getName().equals(ANON)) {
+                    addActionError("Can't use that name");
+                } else if (!user.getName().isEmpty()) {
+                    if (user.getPassword().isEmpty()) {
+                        addActionError("Type password");
                     }
                 }
-            }
-        }
-        if (post == null || post.getTxt() == null || post.getTxt().isEmpty()) {
-            addActionError("Type something");
-        }
-        if (user.getName().equals(ANON)) {
-            addActionError("Can't use that name");
-        } else if (!user.getName().isEmpty()) {
-            if (user.getPassword().isEmpty()) {
-                addActionError("Type password");
             }
         }
 //        if (post.getUser().getName().equals("anonymous")) {
 //            addActionError("Choose the name");
 //        }
+    }
+
+    private void isPostEmpty() {
+        if (post == null || post.getTxt() == null || post.getTxt().isEmpty()) {
+            addActionError("Type something");
+        }
+    }
+
+    private void passwordMatch() {
+        if (Dao.getNames().contains(user.getName())) {
+            for (User user1 : Dao.getUsers()) {
+                if (user.getName().equals(user1.getName())) {
+                    if (!user.getPassword().equals(user1.getPassword())) {
+                        addActionError("Password is wrong");
+                    }
+                }
+            }
+        }
     }
 
     public void validateAddPost() {
@@ -90,12 +104,19 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     }
 
     public void validationEditPost() {
-        validation();
+        isPostEmpty();
+        passwordMatch();
+    }
+
+    public void validateHidePost() {
+        if (user.getPassword() != null) {
+            passwordMatch();
+        }
     }
 
     public String hidePost() throws Exception {
-        Dao.hidePost(post);
-        return SUCCESS;
+        String result = Dao.hidePostCheck(post, user);
+        return result;
     }
 
     public String showHiddenPosts() throws Exception {
@@ -156,16 +177,8 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return post;
     }
 
-//    public List<Post> getPosts() {
-//        return posts;
-//    }
-//
-//    public void setPosts(List<Post> posts) {
-//        this.posts = posts;
-//    }
-
     public String printString() {
-        return "";
+        return "qwerty";
     }
 
     public Integer getId() {
@@ -184,7 +197,13 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         this.user = user;
     }
 
-    public String getANON() {
+    public static String getANON() {
         return ANON;
+    }
+
+    private void zeroing() {
+        id = null;
+        user = null;
+        post = null;
     }
 }

@@ -28,6 +28,12 @@
 
         <action name="hidePost" class="eu.belugin.actions.MainAction" method="hidePost">
             <result name="success" type="redirectAction">index</result>
+            <result name="error">WEB-INF/pages/enter-password.jsp</result>
+        </action>
+
+        <action name="passwordCheck" class="eu.belugin.actions.MainAction" method="hidePost">
+            <result name="success" type="redirectAction">index</result>
+            <result name="input">/WEB-INF/pages/enter-password.jsp</result>
         </action>
 
         <action name="deletePost" class="eu.belugin.actions.MainAction" method="deletePost">
@@ -43,12 +49,12 @@
         </action>
 
         <action name="addReply" class="eu.belugin.actions.MainAction">
-            <result name="success">WEB-INF/pages/replying.jsp</result>
+            <result name="success">/WEB-INF/pages/replying.jsp</result>
         </action>
 
         <action name="saveReply" class="eu.belugin.actions.MainAction" method="addReply">
             <result name="success" type="redirectAction">index</result>
-            <result name="input">WEB-INF/pages/replying.jsp</result>
+            <result name="input">/WEB-INF/pages/replying.jsp</result>
         </action>
 
         <action name="deleteReply" class="eu.belugin.actions.MainAction" method="deleteReply">

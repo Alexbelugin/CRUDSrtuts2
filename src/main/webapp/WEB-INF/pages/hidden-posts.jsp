@@ -62,7 +62,8 @@
             <div class="card-header text-muted"><s:property value="title"/></div>
             <div class="card-body">
                 <h5 class="card-title text-muted"><s:property value="user.name"/> wrote:</h5>
-                <p class="card-text text-muted"><s:property value="txt"/></p>
+                <p class="card-text text-muted"><s:property escapeHtml="false"
+                                                            value="txt.replace(\"\n\", \" <br />\")"/></p>
                 <div class="card-footer">
                     <s:url action="restorePost" var="url">
                         <s:param name="post.id" value="id"/>
@@ -73,12 +74,12 @@
                         <s:param name="user.name" value="user.name"/>
                     </s:url>
                     <s:a href="%{deletePostUrl}" escapeAmp="false" cssClass="card-link">Delete</s:a>
-                    <%--<a href="<s:property value="#url"/> ">Delete</a>--%>
-                    <%--<s:url action="hidePost" var="hidePostUrl">--%>
+                        <%--<a href="<s:property value="#url"/> ">Delete</a>--%>
+                        <%--<s:url action="hidePost" var="hidePostUrl">--%>
                         <%--<s:param name="post.id" value="id"/>--%>
                         <%--<s:param name="user.name" value="user.name"/>--%>
-                    <%--</s:url>--%>
-                    <%--<s:a href="%{hidePostUrl}" escapeAmp="false" cssClass="card-link">Hide</s:a>--%>
+                        <%--</s:url>--%>
+                        <%--<s:a href="%{hidePostUrl}" escapeAmp="false" cssClass="card-link">Hide</s:a>--%>
                 </div>
             </div>
         </div>

@@ -15,13 +15,34 @@ public class Dao {
     static {
         posts = new ArrayList<>();
         names = new HashSet<>();
+        users = new ArrayList<>();
         User user = new User("Elon Musk", "12345");
+        User admin = new User("Admin", "admin");
+        users.add(user);
+        users.add(admin);
+        for (User userok : users) {
+            names.add(userok.getName());
+        }
         Post post1 = new Post(getCounter(), "Stars are the limit", "I'll send Tesla to Mars", user);
         Post post2 = new Post(getCounter(), "Take mine as well", new User());
         Post post3 = new Post(getCounter(), "Just give it to me", new User());
         Post post4 = new Post(getCounter(), "Not a joke", "I'm full!", new User());
         Post post5 = new Post(getCounter(), "U r fool", new User());
         Post post6 = new Post(getCounter(), "hi!", new User());
+        Post post7 = new Post(getCounter(), "Welcome! This is post's title",
+                "You can add new post by clicking on New Post button in the left corner.\n\nYou can add post " +
+                        "anonymously, or with your name and password. If you are new, just type your name and password " +
+                        "you want.\n\nPosts with password you can edit, hide add delete only with password. Same" +
+                        " idea with replies, but deleting is the only option.\n\nTo try the system, take my pass: admin." +
+                        "\n\nIf you want to post and reply anonymously, it's your choice. But everybody can do " +
+                        "everything with your posts and replies.",
+                admin);
+        Post post8 = new Post(getCounter(), "This is reply under password. Your can't delete it without password",
+                admin);
+        Post post9 = new Post(getCounter(), "This is anonymous post. Hide it, edit it, delete it. Do what you want!",
+                new User());
+        Post post10 = new Post(getCounter(), "This is anonymous reply. Every body can delete it.",
+                new User());
 
         post1.setReplies(new ArrayList<>(Arrays.asList(post2, post3)));
         post4.setReplies(new ArrayList<>(Arrays.asList(post5, post6)));
@@ -29,6 +50,9 @@ public class Dao {
         post3.setParent(post1);
         post5.setParent(post4);
         post6.setParent(post4);
+        post9.setParent(post7);
+        post10.setParent(post7);
+
 //        post2.setReplies(Collections.singletonList(post4));
 
         posts.add(post1);
@@ -37,12 +61,11 @@ public class Dao {
         posts.add(post4);
         posts.add(post5);
         posts.add(post6);
+        posts.add(post7);
+        posts.add(post8);
+        posts.add(post9);
+        posts.add(post10);
 
-        users = new ArrayList<>();
-        users.add(user);
-        for (User user1 : users) {
-            names.add(user1.getName());
-        }
     }
 
     //    public static List<Post> getPosts() {
@@ -57,7 +80,7 @@ public class Dao {
             deletePost(post);
             return MainAction.SUCCESS;
         } else {
-            for (User user1 :users) {
+            for (User user1 : users) {
                 if (user.getName().equals(user1.getName())) {
                     if (user.getPassword() == null || !user.getPassword().equals(user1.getPassword())) {
                         return MainAction.ERROR;
@@ -82,7 +105,6 @@ public class Dao {
             posts.remove(d);
         }
     }
-
 
     public static void addPost(Post post, User user) {
         if (post.getId() == null) {
@@ -131,7 +153,7 @@ public class Dao {
             deleteReply(post);
             return MainAction.SUCCESS;
         } else {
-            for (User user1 :users) {
+            for (User user1 : users) {
                 if (user.getName().equals(user1.getName())) {
                     if (user.getPassword() == null || !user.getPassword().equals(user1.getPassword())) {
                         return MainAction.ERROR;
@@ -145,7 +167,7 @@ public class Dao {
         return null;
     }
 
-    public static boolean deleteReply(Post post) {
+    private static boolean deleteReply(Post post) {
         for (Post post1 : posts) {
             if (post1.getId().equals(post.getId())) {
                 for (Post post2 : posts) {
@@ -179,7 +201,7 @@ public class Dao {
             hidePost(post);
             return MainAction.SUCCESS;
         } else {
-            for (User user1 :users) {
+            for (User user1 : users) {
                 if (user.getName().equals(user1.getName())) {
                     if (user.getPassword() == null || !user.getPassword().equals(user1.getPassword())) {
                         return MainAction.ERROR;
@@ -232,5 +254,13 @@ public class Dao {
 
     public static void setUsers(List<User> users) {
         Dao.users = users;
+    }
+
+    public static List<Post> getPosts() {
+        return posts;
+    }
+
+    public static void setPosts(List<Post> posts) {
+        Dao.posts = posts;
     }
 }

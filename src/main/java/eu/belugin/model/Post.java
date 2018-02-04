@@ -13,6 +13,10 @@ public class Post {
 
     public Post() {}
 
+    public Post(Integer id) {
+        this.id = id;
+    }
+
     public Post(Integer id, String txt, Post parent, List<Post> replies, boolean hidden) {
         this.id = id;
         this.txt = txt;

@@ -89,7 +89,7 @@
                             <div class="col" align="left" style="width: 35rem;">
                                 <div class="card">
                                     <div class="card-body" style="width: 30rem;">
-                                        <s:property value="txt"/>
+                                        <s:property escapeHtml="false" value="txt.replace(\"\n\", \" <br />\")"/>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,8 @@
                                             <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/>
                                                 replied:</h6>
                                             <p class="card-text">
-                                                <s:property value="#child.txt"/>
+                                                <s:property escapeHtml="false"
+                                                            value="#child.txt.replace(\"\n\", \" <br />\")"/>
                                             </p>
                                             <s:url action="deleteReply" var="deleteReplyUrl">
                                                 <s:param name="post.id" value="id"/>

@@ -15,18 +15,13 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     private List<Post> posts;
     private User user;
     private Integer id;
+    private final String ANON = "anonymous";
 
     @Override
     public String execute() {
         if (post != null && post.getId() != null) {
             post = Dao.getPost(post.getId());
         }
-//        else if (post == null) {
-//            post = new SuperPost();
-//            post.setId(String.valueOf(Dao.getAllPosts().size()));
-//        } else {
-//            post.setId(String.valueOf(Dao.getAllPosts().size()));
-//        }
 
         return SUCCESS;
     }
@@ -46,6 +41,9 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         Collections.reverse(notDeleted);
         setPosts(notDeleted);
 //        setPosts(Dao.getPosts());
+        id = null;
+        user = null;
+        post = null;
 
         return SUCCESS;
     }
@@ -56,7 +54,6 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         return SUCCESS;
     }
 
-    //    TODO add validation empty reply
     public void validation() {
         if (user != null && user.getName() != null && !user.getName().isEmpty()) {
             if (Dao.getNames().contains(user.getName())) {
@@ -72,6 +69,13 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
         if (post == null || post.getTxt() == null || post.getTxt().isEmpty()) {
             addActionError("Type something");
         }
+        if (user.getName().equals(ANON)) {
+            addActionError("Can't use that name");
+        } else if (!user.getName().isEmpty()) {
+            if (user.getPassword().isEmpty()) {
+                addActionError("Type password");
+            }
+        }
 //        if (post.getUser().getName().equals("anonymous")) {
 //            addActionError("Choose the name");
 //        }
@@ -82,6 +86,10 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
     }
 
     public void validateAddReply() {
+        validation();
+    }
+
+    public void validationEditPost() {
         validation();
     }
 
@@ -174,5 +182,9 @@ public class MainAction extends ActionSupport /*implements Preparable*/ {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getANON() {
+        return ANON;
     }
 }

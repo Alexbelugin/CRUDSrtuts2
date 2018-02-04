@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
-
 <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--%>
 <%--<link rel="stylesheet" href="<s:url value="css/site.css"/>">--%>
 
@@ -14,15 +13,41 @@
     <title>Main Zabor</title>
 </head>
 <body>
-<%--<div>--%>
-<%--<a href="<s:url action="editPost"/>">New Post</a>--%>
-<%--</div>--%>
-<div>
-    <!-- Button trigger modal -->
+<nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
+    <!-- Navbar content -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         New Post
     </button>
+    <ul class="nav nav-pills justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Main Zabor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<s:url action="hiddenPosts"/>">Hidden Posts</a>
+        </li>
+    </ul>
+</nav>
+<%--<div>--%>
+<%--<a href="<s:url action="editPost"/>">New Post</a>--%>
+<%--</div>--%>
+<%--<ul class="nav justify-content-center">--%>
+    <%--<li class="nav-item">--%>
+        <%--<a class="nav-link" href="#">Main Zabor</a>--%>
+        <%--&lt;%&ndash;<s:url action="addReply" var="addReplyUrl">&ndash;%&gt;--%>
+        <%--&lt;%&ndash;<s:param name="id" value="id"/>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;</s:url>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;<s:a href="%{addReplyUrl}" escapeAmp="false" cssClass="card-link" data-toggle="modal" data-target="#exampleModal">New Post</s:a>&ndash;%&gt;--%>
+    <%--</li>--%>
+    <%--<li class="nav-item">--%>
+        <%--<a class="nav-item" href="<s:url action="hiddenPosts"/>">Hidden Posts</a>--%>
+    <%--</li>--%>
+<%--</ul>--%>
+<div class="container">
+    <div class="col col-md">
 
+    </div>
+</div>
+<div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -35,42 +60,29 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <s:actionerror/>
-                    <s:form action="save" validate="true">
+                    <s:form cssClass="well form-vertical" action="savePost">
                         <s:textfield cssClass="form-control" name="post.title" value="%{post.title}" label="Title"/>
-                        <s:textarea cssClass="form-control" name="post.txt" value="%{post.txt}" label="Post"
-                                     requiredLabel="true"/>
+                        <s:textarea cssClass="form-control-lg" name="post.txt" value="%{post.txt}" label="Post"
+                                    requiredLabel="true" rows="6"/>
                         <s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>
-                        <s:password cssClass="form-control" name="user.password" value="%{user.password}" label="Password"/>
+                        <s:password cssClass="form-control" name="user.password" value="%{user.password}"
+                                    label="Password"/>
                         <s:hidden name="post.id" value="%{post.id}"/>
                         <s:submit cssClass="btn btn-primary" value="Submit"/>
                         <%--<s:submit value="Cancel" action="index"/>--%>
                     </s:form>
                 </div>
-                <%--<div class="modal-footer">--%>
-                    <%--<input class="btn btn-primary" type="submit" value="Submit">--%>
-                    <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-                    <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
-                <%--</div>--%>
             </div>
         </div>
     </div>
 </div>
-<div><a href="<s:url action="hiddenPosts"/>">Hidden Posts</a></div>
-<br><br>
-<%--<s:if test="posts.size() > 0">--%>
-<%--<p>BOLWE NULLLJJJAAA</p>--%>
-<%--</s:if>--%>
-<%--<s:property value="printString()"/>--%>
-<%--<s:property value="posts.size()"/>--%>
-
-<div class="container">
+<div class="container" align="center">
     <s:iterator value="posts">
         <s:if test="parent == null">
             <div class="card bg-light mb-3" style="width: 50rem;">
-                <div class="card-header"><s:property value="title"/></div>
+                <div class="card-header" style="background-color: #E8F1F2;" align="left"><s:property value="title"/></div>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/> wrote:</h6>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col" align="left" style="width: 35rem;">
@@ -84,7 +96,8 @@
                                 <s:iterator value="childPosts" var="child">
                                     <div class="card" style="width: 12rem;">
                                         <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/></h6>
+                                            <h6 class="card-subtitle mb-2 text-muted"><s:property value="user.name"/>
+                                                replied:</h6>
                                             <p class="card-text">
                                                 <s:property value="#child.txt"/>
                                             </p>

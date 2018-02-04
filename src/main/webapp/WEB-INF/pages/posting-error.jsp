@@ -8,26 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Editing</title>
+    <title>New Post</title>
 </head>
 <body>
 <div class="container">
     <div class="card w-50">
         <div class="card-body">
-            <h5 class="card-title">Edit Post</h5>
+            <h5 class="card-title">New Post</h5>
             <%--<p class="card-text">--%>
             <s:if test="hasActionErrors()">
                 <div class="alert alert-danger" role="alert">
                     <s:actionerror/>
                 </div>
             </s:if>
-            <s:form action="saveEdit">
-                <s:textarea cssClass="form-control-lg" name="post.txt" value="%{post.txt}" label="Text"
+            <s:form action="savePost">
+                <s:textfield cssClass="form-control" name="post.title" value="%{post.title}" label="Title"/>
+                <s:textarea cssClass="form-control-lg" name="post.txt" value="%{post.txt}" label="Post"
                             requiredLabel="true" rows="6"/>
-                <s:hidden name="user.name" value="%{user.name}"/>
-                <s:if test="%{user.name != ANON}">
-                    <s:password cssClass="form-control" name="user.password" value="%{user.password}" label="Password"/>
-                </s:if>
+                <s:textfield cssClass="form-control" name="user.name" value="%{user.name}" label="Name"/>
+                <s:password cssClass="form-control" name="user.password" value="%{user.password}" label="Password"/>
                 <s:hidden name="post.id" value="%{post.id}"/>
                 <s:submit cssClass="btn btn-primary" value="Submit"/>
                 <s:submit cssClass="btn btn-secondary" value="Cancel" action="index"/>

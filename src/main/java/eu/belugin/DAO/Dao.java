@@ -125,6 +125,7 @@ public class Dao {
     }
 
     public static void userNameCheck(Post post, User user) {
+        user.getName().trim();
         if (user.getName().equals("") || user.getName().equals("anonymous")) {
             post.setUser(new User());
         } else if (!user.getName().equals("") && names.contains(user.getName())) {

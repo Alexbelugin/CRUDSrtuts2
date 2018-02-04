@@ -12,8 +12,18 @@
             <result name="success">WEB-INF/pages/main.jsp</result>
         </action>
 
+        <action name="savePost" class="eu.belugin.actions.MainAction" method="addPost">
+            <result name="success" type="redirectAction">index</result>
+            <result name="input">WEB-INF/pages/posting-error.jsp</result>
+        </action>
+
         <action name="editPost" class="eu.belugin.actions.MainAction">
             <result name="success">WEB-INF/pages/post-editing.jsp</result>
+        </action>
+
+        <action name="saveEdit" class="eu.belugin.actions.MainAction" method="addPost">
+            <result name="success" type="redirectAction">index</result>
+            <result name="input">WEB-INF/pages/post-editing.jsp</result>
         </action>
 
         <action name="hidePost" class="eu.belugin.actions.MainAction" method="hidePost">
@@ -28,22 +38,17 @@
             <result name="success">WEB-INF/pages/hidden-posts.jsp</result>
         </action>
 
-        <action name="save" class="eu.belugin.actions.MainAction" method="addPost">
-            <result name="success" type="redirectAction">index</result>
-            <result name="input">WEB-INF/pages/post-editing.jsp</result>
-        </action>
-
         <action name="restorePost" class="eu.belugin.actions.MainAction" method="restoreHiddenPost">
             <result name="success" type="redirectAction">hiddenPosts</result>
         </action>
 
         <action name="addReply" class="eu.belugin.actions.MainAction">
-            <result name="success">WEB-INF/pages/reply-editing.jsp</result>
+            <result name="success">WEB-INF/pages/replying.jsp</result>
         </action>
 
         <action name="saveReply" class="eu.belugin.actions.MainAction" method="addReply">
             <result name="success" type="redirectAction">index</result>
-            <result name="input">WEB-INF/pages/reply-editing.jsp</result>
+            <result name="input">WEB-INF/pages/replying.jsp</result>
         </action>
 
         <action name="deleteReply" class="eu.belugin.actions.MainAction" method="deleteReply">
